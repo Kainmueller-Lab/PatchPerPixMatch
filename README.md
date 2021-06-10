@@ -1,8 +1,7 @@
 # PatchPerPixMatch
 Script collection for matching neuronal morphologies in 3d multicolor light microscopy images
 
-PatchPerPixMatch is based on PatchPerPix instance segmentations [[1]](#1), although any instance segmentation 
-approach can be used. 
+PatchPerPixMatch is based on PatchPerPix instance segmentations [[1]](#1). 
 Moreover, it depends on NBLAST [[2]](#2) to score how well PatchPerPix fragments align with a given target neuron.
 
 ### Pipeline
