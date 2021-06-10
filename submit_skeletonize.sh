@@ -1,14 +1,11 @@
 #!/bin/bash
-billing=kainmueller # flylight
 
 setup=setup22
 exp=${setup}_200511_00
 root=/nrs/saalfeld/kainmuellerd/ppp_all_cat_2_3
-# root=/nrs/saalfeld/kainmuellerd/ppp
-#root=/nrs/saalfeld/kainmuellerd/ppp_Barry
 data_dir=$root/$exp/test/400000/instanced
-min_cable_length=40 # 20 # 30 # 10 # 
-in_key=vote_instances_rm_by_bbox_$min_cable_length # 20 # 30 # 10 # vote_instances_rm_2000
+min_cable_length=20
+in_key=vote_instances_rm_by_bbox_$min_cable_length
 output_dir=$root/$exp/test/400000/skeletons_${in_key}_min_length_$min_cable_length 
 
 echo $exp $data_dir
@@ -47,28 +44,9 @@ do
   fi
 
   echo $log_file
-  
-  # run locally:
-  # python skeletonize.py --in-folder $data_dir --sample $sname --in-key vote_instances_rm_2000 --min-cable-length $min_cable_length --out-folder $data_dir --num-worker 5 > $log_file 
-  
-  # run on cluster:
-  if [ $billing = flylight ]
-  then
-    echo "switching billing from $billing to kainmueller"
-    billing=kainmueller
-  else
-    echo "switching billing from $billing to flylight"
-    billing=flylight
-  fi
 
+  # run on cluster:
   # don't use multiple workers on the cluster; inefficient in case of one catastrophic merger / huge skeleton
-  bsub -P $billing -n 1 -W 8:00 -P flylight -o $log_file python skeletonize.py --in-folder $data_dir --sample $sname --in-key $in_key --min-cable-length $min_cable_length --out-dir $output_dir --num-worker 1
-  # exit
-  # sleep 1
+  bsub -n 1 -W 8:00 -P flylight -o $log_file python skeletonize.py --in-folder $data_dir --sample $sname --in-key $in_key --min-cable-length $min_cable_length --out-dir $output_dir --num-worker 1
 
 done
-
-
-
-
-
