@@ -8,7 +8,7 @@ do
     do
         setup=setup22
         exp=${setup}_200511_00
-        root=/nrs/saalfeld/kainmuellerd/ppp_all_cat_2_3
+        root=/nrs/saalfeld/maisl/ppp_test
         min_frag_length=20
         lm_id=skeletons_vote_instances_rm_by_bbox_${min_frag_length}_min_length_${min_frag_length}
         lm_dir=$root/$exp/test/400000/$lm_id$lm_suffix/
@@ -41,7 +41,7 @@ do
           mkdir $output_dir$line
 
           # run on cluster:
-          bsub -n 1 -W 2:00 -P $billing -o $log_file Rscript --no-restore --no-save crop_lm_to_em_bbox.R $lm_dir$line $em_dir $output_dir$line
+          bsub -n 1 -W 2:00 -o $log_file Rscript --no-restore --no-save crop_lm_to_em_bbox.R $lm_dir$line $em_dir $output_dir$line
       done
     done
 done
